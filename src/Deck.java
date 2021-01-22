@@ -21,8 +21,9 @@ public class Deck {
     }
 
     public Card draw_card() {
-        int card_ID = ThreadLocalRandom.current().nextInt(0, deck.size() + 1);
+        int card_ID = ThreadLocalRandom.current().nextInt(0, deck.size());
         Card card = deck.remove(card_ID);
+        System.out.println(deck.size());
 
         return card;
     }
