@@ -1,3 +1,4 @@
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
@@ -27,8 +28,14 @@ public class Main {
             System.out.printf("[H] Hit\n[S]Stand\n");
 
             Scanner choice = new Scanner(System.in);
-            String player_choice = choice.nextLine();
-            choice.close();
+            String player_choice;
+            try {
+                player_choice = choice.nextLine();
+            } catch (Exception exception) {
+                System.out.println("Try agian:");
+                player_choice = null;
+                continue;
+            }
 
             switch (player_choice) {
                 case ("H"):
@@ -42,15 +49,16 @@ public class Main {
                     break;
                 default:
                     System.out.println("Invalid Option");
-                    continue;
             }
 
             if (player.get_points() > 21) {
                 player.convert_ace();
                 if (player.get_points() > 21) {
                     System.out.println("You busted!");
+                    choice.close();
                     return;
                 }
+                choice.close();
             }
         }
 
