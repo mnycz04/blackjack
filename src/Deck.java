@@ -16,13 +16,8 @@ public class Deck {
         }
     }
 
-    public ArrayList<Card> get_deck() {
-        return deck;
-    }
-
     public Card draw_card() {
         int card_ID = ThreadLocalRandom.current().nextInt(0, deck.size());
-        Card card = deck.remove(card_ID);
-        return card;
+        return deck.remove(card_ID);
     }
 }

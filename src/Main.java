@@ -1,4 +1,3 @@
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
@@ -25,34 +24,33 @@ public class Main {
             }
 
             System.out.printf("You have %d points.\n", player.get_points());
-            System.out.printf("[H] Hit\n[S]Stand\n");
+            System.out.print("[H] Hit\n[S]Stand\n");
 
             Scanner choice = new Scanner(System.in);
             String player_choice;
             try {
                 player_choice = choice.nextLine();
             } catch (Exception exception) {
-                System.out.println("Try agian:");
-                player_choice = null;
+                System.out.println("Try again:");
                 continue;
             }
 
             switch (player_choice) {
-                case ("H"):
+                case ("H") -> {
                     Card drawn_card = playedDeck.draw_card();
                     player.add_card(drawn_card);
                     System.out.printf("\n You drew a %s.\n You now have %d points.", drawn_card.get_card_name(),
                             player.get_points());
-                    break;
-                case ("S"):
-                    player_turn = false;
-                    break;
-                default:
-                    System.out.println("Invalid Option");
+                }
+                case ("S") -> player_turn = false;
+                default -> System.out.println("Invalid Option");
             }
 
             if (player.get_points() > 21) {
-                player.convert_ace();
+                Boolean had_ace = player.convert_ace();
+                if (had_ace) {
+                    continue;
+                }
                 if (player.get_points() > 21) {
                     System.out.println("You busted!");
                     choice.close();
@@ -76,13 +74,10 @@ public class Main {
 
         if (player.get_points() > dealer.get_points()) {
             System.out.println("You've Won!");
-            return;
         } else if (dealer.get_points() == player.get_points()) {
             System.out.println("Push.");
-            return;
         } else {
             System.out.println("The dealer wins.");
-            return;
         }
     }
 }
