@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Player {
-    private int points = 0;
-    private ArrayList<Card> player_cards = new ArrayList<>();
+    protected int points = 0;
+    private final ArrayList<Card> player_cards = new ArrayList<>();
 
     public void add_card(Card card) {
         player_cards.add(card);
@@ -17,11 +17,14 @@ public class Player {
         return points;
     }
 
-    public void convert_ace() {
-        for (int i = 0; i < player_cards.size(); i++) {
-            if (player_cards.get(i).get_card_ID() >= 48) {
+    public Boolean convert_ace() {
+        for (Card player_card : player_cards) {
+            if (player_card.get_card_ID() >= 48) {
                 points -= 10;
+                player_card.set_card_ID(-1);
+                return true;
             }
         }
+        return false;
     }
 }
