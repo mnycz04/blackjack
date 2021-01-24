@@ -14,6 +14,13 @@ public class Main {
             dealer.add_card(playedDeck.draw_card());
         }
 
+        if (player.get_points() > 21) {
+            player.convert_ace();
+        }
+        if (dealer.get_points() > 21) {
+            dealer.convert_ace();
+        }
+
         boolean player_turn = true;
         while (player_turn) {
             System.out.printf("The dealer has the %s showing.\n\n", dealer.get_cards().get(0).get_card_name());
@@ -66,9 +73,10 @@ public class Main {
 
             if (dealer.get_points() > 21) {
                 dealer.convert_ace();
-            } else {
-                System.out.println("The dealer busted!\nYou Won!");
-                return;
+                if (dealer.get_points() > 21) {
+                    System.out.printf("The dealer busted with %d!\nYou Won!", dealer.get_points());
+                    return;
+                }
             }
         }
 
@@ -77,7 +85,7 @@ public class Main {
         } else if (dealer.get_points() == player.get_points()) {
             System.out.println("Push.");
         } else {
-            System.out.println("The dealer wins.");
+            System.out.printf("The dealer wins with %d", dealer.get_points());
         }
     }
 }
